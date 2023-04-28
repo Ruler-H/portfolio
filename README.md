@@ -1,4 +1,4 @@
-# 1. Project Title
+# 01. Project Title
 ## - Cafe Platform for portfolio
-# 2. Project Information
-# 3. Project Introduce
+# 02. Project Information
+# 03. Project Introduce
