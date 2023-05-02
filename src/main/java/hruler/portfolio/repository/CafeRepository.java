@@ -3,15 +3,16 @@ package hruler.portfolio.repository;
 import hruler.portfolio.domain.cafe.Cafe;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class CafeRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
     public void save(Cafe cafe) {
         em.persist(cafe);

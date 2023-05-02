@@ -3,7 +3,6 @@ package hruler.portfolio.service;
 import hruler.portfolio.domain.cafe.Cafe;
 import hruler.portfolio.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +19,7 @@ public class CafeService {
     /**
      * 카페 등록
      */
+    @Transactional
     public Long register(Cafe cafe) {
 
         validateDuplicateCafe(cafe); // 중복 등록 검증
