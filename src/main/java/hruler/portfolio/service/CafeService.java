@@ -20,7 +20,7 @@ public class CafeService {
      * 카페 등록
      */
     @Transactional
-    public Long register(Cafe cafe) {
+    public Long registerCafe(Cafe cafe) {
 
         validateDuplicateCafe(cafe); // 중복 등록 검증
         cafeRepository.save(cafe);
