@@ -1,7 +1,7 @@
 package hruler.portfolio.domain.cafe;
 
+import hruler.portfolio.domain.Address;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
