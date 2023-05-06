@@ -1,6 +1,7 @@
 package hruler.portfolio.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Entity
@@ -15,4 +16,8 @@ public class Member {
     private Address address;
     private String name;
 
+    public Member(String name, Address address) {
+        this.address = address;
+        this.name = name;
+    }
 }
