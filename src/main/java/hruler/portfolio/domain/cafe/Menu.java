@@ -5,9 +5,11 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(name = "cafe_menu")
 public abstract class Menu {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "menu_id")
     private Long id;
     private String name;
@@ -15,4 +17,7 @@ public abstract class Menu {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cafe_id")
+    private Cafe cafe;
 }
