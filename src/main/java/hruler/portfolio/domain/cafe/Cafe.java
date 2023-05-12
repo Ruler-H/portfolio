@@ -24,8 +24,19 @@ public class Cafe {
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL)
     private List<Menu> menus = new ArrayList<>();
 
-    public Cafe(String name, Address address) {
+    private void setName(String name) {
         this.name = name;
+    }
+
+    private void setAddress(Address address) {
         this.address = address;
+    }
+
+    public static Cafe createCafe(String name, Address address) {
+        Cafe cafe = new Cafe();
+        cafe.setName(name);
+        cafe.setAddress(address);
+
+        return cafe;
     }
 }

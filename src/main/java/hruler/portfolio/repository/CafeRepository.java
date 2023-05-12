@@ -2,7 +2,6 @@ package hruler.portfolio.repository;
 
 import hruler.portfolio.domain.cafe.Cafe;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -26,7 +26,7 @@ public class CafeServiceTest {
     @Test
     public void 카페등록() throws Exception {
         //give
-        Cafe cafe = new Cafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
+        Cafe cafe = Cafe.createCafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
 
         //when
         Long saveId = cafeService.registerCafe(cafe);
@@ -38,8 +38,8 @@ public class CafeServiceTest {
     @Test(expected = IllegalStateException.class)
     public void 중복_카페_예외() throws Exception {
         //give
-        Cafe cafe1 = new Cafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
-        Cafe cafe2 = new Cafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
+        Cafe cafe1 = Cafe.createCafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
+        Cafe cafe2 = Cafe.createCafe("cafeA", new Address("cityA", "streetA", "zipcodeA"));
 
         //when
         cafeService.registerCafe(cafe1);
