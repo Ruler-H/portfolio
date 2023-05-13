@@ -4,15 +4,28 @@
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+  <div class="py-5 text-center">
+    <h2 th:text="#{page.cafeList}">카페 목록</h2>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end"
+              onclick="location.href='registerCafeForm.html'"
+              th:onclick="|location.href='@{/cafes/new}'|"
+              type="button" th:text="#{page.registerCafe}">카페 등록</button>
+    </div>
+  </div>
+
+  <hr class="my-4"/>
   <div>
     <table class="table table-striped">
       <thead>
       <tr>
         <th>#</th>
-        <th>카페 이름</th>
-        <th>도시</th>
-        <th>주소</th>
-        <th>우편번호</th>
+        <th th:text="#{label.cafe.name}">카페 이름</th>
+        <th th:text="#{label.cafe.city}">도시</th>
+        <th th:text="#{label.cafe.street}">거리</th>
+        <th th:text="#{label.cafe.zipcode}">우편번호</th>
       </tr>
       </thead>
       <tbody>

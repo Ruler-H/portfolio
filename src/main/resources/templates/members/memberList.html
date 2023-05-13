@@ -4,15 +4,28 @@
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+  <div class="py-5 text-center">
+    <h2 th:text="#{page.members}">회원 목록</h2>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary float-end"
+              onclick="location.href='createMemberForm.html'"
+              th:onclick="|location.href='@{/members/new}'|"
+              type="button" th:text="#{page.createMember}">회원 가입</button>
+    </div>
+  </div>
+
+  <hr class="my-4"/>
   <div>
     <table class="table table-striped">
       <thead>
       <tr>
         <th>#</th>
-        <th>이름</th>
-        <th>도시</th>
-        <th>주소</th>
-        <th>우편번호</th>
+        <th th:text="#{label.member.name}">이름</th>
+        <th th:text="#{label.member.city}">도시</th>
+        <th th:text="#{label.member.street}">거리</th>
+        <th th:text="#{label.member.zipcode}">우편번호</th>
       </tr>
       </thead>
       <tbody>

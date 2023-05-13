@@ -12,15 +12,15 @@
 
     <div class="jumbotron">
         <h1>HELLO CAFE</h1>
-        <p class="lead">회원 기능</p>
+        <p class="lead" th:text="#{label.member.function}"></p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
-            <a class="btn btn-lg btn-secondary" href="/members">회원 목록</a>
+            <a class="btn btn-lg btn-secondary" href="/members/new" th:text="#{page.createMember}">회원 가입</a>
+            <a class="btn btn-lg btn-secondary" href="/members" th:text="#{page.members}">회원 목록</a>
         </p>
-        <p class="lead">카페 기능</p>
+        <p class="lead" th:text="#{label.cafe.function}">카페 기능</p>
         <p>
-            <a class="btn btn-lg btn-dark" href="/cafes/new">카페 등록</a>
-            <a class="btn btn-lg btn-dark" href="/cafes">카페 목록</a>
+            <a class="btn btn-lg btn-dark" href="/cafes/new" th:text="#{page.registerCafe}">카페 등록</a>
+            <a class="btn btn-lg btn-dark" href="/cafes" th:text="#{page.cafeList}">카페 목록</a>
         </p>
     </div>
 
