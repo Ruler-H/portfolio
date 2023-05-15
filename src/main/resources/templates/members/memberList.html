@@ -26,6 +26,7 @@
         <th th:text="#{label.member.city}">도시</th>
         <th th:text="#{label.member.street}">거리</th>
         <th th:text="#{label.member.zipcode}">우편번호</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -35,6 +36,9 @@
         <td th:text="${member.address?.city}"></td>
         <td th:text="${member.address?.street}"></td>
         <td th:text="${member.address?.zipcode}"></td>
+        <td>
+          <a href="#" th:href="@{/members/{memberId}/edit (memberId=${member.id})}" class="btn btn-primary" role="button">변경</a>
+        </td>
       </tr>
       </tbody>
     </table>
