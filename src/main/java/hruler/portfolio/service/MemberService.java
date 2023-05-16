@@ -1,7 +1,9 @@
 package hruler.portfolio.service;
 
 import hruler.portfolio.domain.Member;
+import hruler.portfolio.form.MemberRegisterForm;
 import hruler.portfolio.repository.MemberRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final EntityManager em;
 
     /**
      * 회원 등록
@@ -25,6 +28,12 @@ public class MemberService {
         validateDuplicateMember(member);
         memberRepository.save(member);
         return member.getId();
+    }
+
+    @Transactional
+    public void update(Long memberId, MemberRegisterForm form) {
+        Member findMember = em.find(Member.class, memberId);
+        findMember.updateInfo(form);
     }
 
     private void validateDuplicateMember(Member member) {

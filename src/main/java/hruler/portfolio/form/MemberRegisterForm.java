@@ -9,6 +9,8 @@ import lombok.Setter;
 @Getter @Setter
 public class MemberRegisterForm {
 
+    private Long id;
+
     @NotEmpty(message = "회원 이름은 필수 입니다")
     private String name;
 
@@ -18,6 +20,7 @@ public class MemberRegisterForm {
 
     public static MemberRegisterForm convert(Member member) {
         MemberRegisterForm memberRegisterForm = new MemberRegisterForm();
+        memberRegisterForm.setId(member.getId());
         memberRegisterForm.setName(member.getName());
         memberRegisterForm.setCity(member.getAddress().getCity());
         memberRegisterForm.setStreet(member.getAddress().getStreet());

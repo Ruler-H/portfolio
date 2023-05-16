@@ -1,5 +1,6 @@
 package hruler.portfolio.domain;
 
+import hruler.portfolio.form.MemberRegisterForm;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +19,15 @@ public class Member {
     private Address address;
     private String name;
 
+
+
     public Member(String name, Address address) {
         this.address = address;
         this.name = name;
+    }
+
+    public void updateInfo(MemberRegisterForm form) {
+        this.name = form.getName();
+        this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
     }
 }

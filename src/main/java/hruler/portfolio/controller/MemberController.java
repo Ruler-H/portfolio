@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,8 +52,18 @@ public class MemberController {
     public String edit(@PathVariable("memberId") Long memberId, Model model) {
         Member findMember = memberService.findOne(memberId);
 
-        MemberRegisterForm memberRegisterForm = MemberRegisterForm.convert(findMember);
+        MemberRegisterForm form = MemberRegisterForm.convert(findMember);
+
+        model.addAttribute("form", form);
 
         return "members/updateMemberForm";
+    }
+
+    @PostMapping("/{memberId}/edit")
+    public String edit(@PathVariable("memberId") Long memberId,
+                       @ModelAttribute("form") MemberRegisterForm form) {
+        memberService.update(memberId, form);
+
+        return "redirect:/members";
     }
 }
