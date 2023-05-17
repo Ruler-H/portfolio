@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -48,5 +49,13 @@ public class CafeController {
         List<Cafe> cafes = cafeService.findCafes();
         model.addAttribute("cafes", cafes);
         return "cafes/cafeListForm";
+    }
+
+    @GetMapping("{cafeId}/edit")
+    public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
+        Cafe findCafe = cafeService.findOne(cafeId);
+        CafeRegisterForm form = CafeRegisterForm.convert(findCafe);
+        model.addAttribute("form", form);
+        return "cafes/updateCafeForm";
     }
 }

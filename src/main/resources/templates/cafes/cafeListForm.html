@@ -26,6 +26,7 @@
         <th th:text="#{label.cafe.city}">도시</th>
         <th th:text="#{label.cafe.street}">거리</th>
         <th th:text="#{label.cafe.zipcode}">우편번호</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
@@ -35,6 +36,9 @@
         <td th:text="${cafe.address?.city}"></td>
         <td th:text="${cafe.address?.street}"></td>
         <td th:text="${cafe.address?.zipcode}"></td>
+        <td>
+          <a href="#" th:href="@{/cafes/{cafeId}/edit (cafeId=${cafe.id})}" class="btn btn-primary" role="button">변경</a>
+        </td>
       </tr>
       </tbody>
     </table>
