@@ -1,8 +1,10 @@
 package hruler.portfolio.service;
 
 import hruler.portfolio.domain.cafe.Cafe;
+import hruler.portfolio.form.CafeRegisterForm;
 import hruler.portfolio.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class CafeService {
 
     private final CafeRepository cafeRepository;
@@ -43,5 +46,12 @@ public class CafeService {
 
     public Cafe findOne(Long cafeId) {
         return cafeRepository.findOne(cafeId);
+    }
+
+    @Transactional
+    public void update(Long cafeId, CafeRegisterForm form) {
+//        log.info("form info = {}", form.getName());
+        Cafe findCafe = findOne(cafeId);
+        findCafe.updateInfo(form);
     }
 }

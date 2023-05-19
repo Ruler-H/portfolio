@@ -32,7 +32,7 @@ public class MemberService {
 
     @Transactional
     public void update(Long memberId, MemberRegisterForm form) {
-        Member findMember = em.find(Member.class, memberId);
+        Member findMember = findOne(memberId);
         findMember.updateInfo(form);
     }
 

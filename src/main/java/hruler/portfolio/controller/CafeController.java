@@ -2,6 +2,7 @@ package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
+import hruler.portfolio.form.CafeDetailForm;
 import hruler.portfolio.form.CafeRegisterForm;
 import hruler.portfolio.service.CafeService;
 import jakarta.validation.Valid;
@@ -10,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,5 +55,23 @@ public class CafeController {
         CafeRegisterForm form = CafeRegisterForm.convert(findCafe);
         model.addAttribute("form", form);
         return "cafes/updateCafeForm";
+    }
+
+    @PostMapping("{cafeId}/edit")
+    public String edit(@PathVariable("cafeId") Long cafeId,
+                       @ModelAttribute("form") CafeRegisterForm form) {
+//        log.info("cafeInfo = {}", form.getName());
+        cafeService.update(cafeId, form);
+
+        return "redirect:/cafes";
+    }
+
+    @GetMapping("{cafeId}/detail")
+    public String detail(@PathVariable("cafeId") Long cafeId,
+                         Model model) {
+        Cafe findCafe = cafeService.findOne(cafeId);
+        CafeDetailForm form = new CafeDetailForm(findCafe);
+        model.addAttribute("form", form);
+        return "cafes/cafeDetailForm";
     }
 }

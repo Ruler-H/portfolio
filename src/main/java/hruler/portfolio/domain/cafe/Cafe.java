@@ -1,6 +1,7 @@
 package hruler.portfolio.domain.cafe;
 
 import hruler.portfolio.domain.Address;
+import hruler.portfolio.form.CafeRegisterForm;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,14 @@ public class Cafe {
         cafe.setAddress(address);
 
         return cafe;
+    }
+
+    public void updateInfo(CafeRegisterForm form) {
+        this.name = form.getName();
+        this.address = new Address(
+                form.getCity(),
+                form.getStreet(),
+                form.getZipcode()
+        );
     }
 }

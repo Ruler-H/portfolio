@@ -37,7 +37,8 @@
         <td th:text="${member.address?.street}"></td>
         <td th:text="${member.address?.zipcode}"></td>
         <td>
-          <a href="#" th:href="@{/members/{memberId}/edit (memberId=${member.id})}" class="btn btn-primary" role="button">변경</a>
+          <a href="#" th:href="@{/members/{memberId}/edit (memberId=${member.id})}" class="btn btn-primary"
+             role="button" th:text="#{button.change}">변경</a>
         </td>
       </tr>
       </tbody>
