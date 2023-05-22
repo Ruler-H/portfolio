@@ -25,6 +25,38 @@
     <input type="text" th:field="*{address.zipcode}" class="form-control" readonly>
   </div>
   <br/>
+  <div class="form-group">
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary float-end"
+                onclick="location.href='addMenuForm.html'"
+                th:onclick="|location.href='@{/cafes/addMenuForm}'|"
+                type="button" th:text="#{button.addMenu}">메뉴 추가</button>
+      </div>
+    </div>
+    <label th:for="menus" th:text="#{label.cafe.menu}">카페 메뉴</label>
+    <div>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th th:text="#{label.cafe.menu.name}">메뉴명</th>
+          <th th:text="#{label.cafe.menu.price}">가격</th>
+          <th th:text="#{label.cafe.menu.type}">종류</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="menu : ${menus}">
+          <td th:text="${menu.id}"></td>
+          <td th:text="${menu.name}"></td>
+          <td th:text="${menu.price}"></td>
+          <td th:text="${menu.type}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br/>
   <button href="#" th:onclick="|location.href='@{/cafes/{cafeId}/edit (cafeId=${form.id})}'|" class="btn btn-primary"
           role="button" th:text="#{button.change}">수정</button>
   <br/>

@@ -1,12 +1,11 @@
-package hruler.portfolio.form;
+package hruler.portfolio.dto;
 
-import hruler.portfolio.domain.Member;
 import hruler.portfolio.domain.cafe.Cafe;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CafeRegisterForm {
+public class CafeRegisterDto {
 
     private Long id;
 
@@ -15,8 +14,8 @@ public class CafeRegisterForm {
     private String street;
     private String zipcode;
 
-    public static CafeRegisterForm convert(Cafe cafe) {
-        CafeRegisterForm cafeRegisterForm = new CafeRegisterForm();
+    public static CafeRegisterDto convert(Cafe cafe) {
+        CafeRegisterDto cafeRegisterForm = new CafeRegisterDto();
         cafeRegisterForm.setId(cafe.getId());
         cafeRegisterForm.setName(cafe.getName());
         cafeRegisterForm.setCity(cafe.getAddress().getCity());

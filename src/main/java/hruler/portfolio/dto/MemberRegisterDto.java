@@ -1,4 +1,4 @@
-package hruler.portfolio.form;
+package hruler.portfolio.dto;
 
 import hruler.portfolio.domain.Member;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 
 @Getter @Setter
-public class MemberRegisterForm {
+public class MemberRegisterDto {
 
     private Long id;
 
@@ -18,8 +18,8 @@ public class MemberRegisterForm {
     private String street;
     private String zipcode;
 
-    public static MemberRegisterForm convert(Member member) {
-        MemberRegisterForm memberRegisterForm = new MemberRegisterForm();
+    public static MemberRegisterDto convert(Member member) {
+        MemberRegisterDto memberRegisterForm = new MemberRegisterDto();
         memberRegisterForm.setId(member.getId());
         memberRegisterForm.setName(member.getName());
         memberRegisterForm.setCity(member.getAddress().getCity());

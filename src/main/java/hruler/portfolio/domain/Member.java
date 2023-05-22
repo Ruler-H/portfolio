@@ -1,8 +1,7 @@
 package hruler.portfolio.domain;
 
-import hruler.portfolio.form.MemberRegisterForm;
+import hruler.portfolio.dto.MemberRegisterDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +25,7 @@ public class Member {
         this.name = name;
     }
 
-    public void updateInfo(MemberRegisterForm form) {
+    public void updateInfo(MemberRegisterDto form) {
         this.name = form.getName();
         this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
     }

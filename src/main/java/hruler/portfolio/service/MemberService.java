@@ -1,7 +1,7 @@
 package hruler.portfolio.service;
 
 import hruler.portfolio.domain.Member;
-import hruler.portfolio.form.MemberRegisterForm;
+import hruler.portfolio.dto.MemberRegisterDto;
 import hruler.portfolio.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class MemberService {
     }
 
     @Transactional
-    public void update(Long memberId, MemberRegisterForm form) {
+    public void update(Long memberId, MemberRegisterDto form) {
         Member findMember = findOne(memberId);
         findMember.updateInfo(form);
     }

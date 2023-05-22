@@ -2,7 +2,7 @@ package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.Member;
-import hruler.portfolio.form.MemberRegisterForm;
+import hruler.portfolio.dto.MemberRegisterDto;
 import hruler.portfolio.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class MemberController {
 
     @GetMapping(value = "new")
     public String createForm(Model model) {
-        model.addAttribute("memberRegisterForm", new MemberRegisterForm());
+        model.addAttribute("memberRegisterForm", new MemberRegisterDto());
         return "members/createMemberForm";
     }
 
     @PostMapping(value = "new")
-    public String create(@Valid MemberRegisterForm form, BindingResult result) {
+    public String create(@Valid MemberRegisterDto form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "members/createMemberForm";
@@ -52,7 +52,7 @@ public class MemberController {
     public String edit(@PathVariable("memberId") Long memberId, Model model) {
         Member findMember = memberService.findOne(memberId);
 
-        MemberRegisterForm form = MemberRegisterForm.convert(findMember);
+        MemberRegisterDto form = MemberRegisterDto.convert(findMember);
 
         model.addAttribute("form", form);
 
@@ -61,7 +61,7 @@ public class MemberController {
 
     @PostMapping("/{memberId}/edit")
     public String edit(@PathVariable("memberId") Long memberId,
-                       @ModelAttribute("form") MemberRegisterForm form) {
+                       @ModelAttribute("form") MemberRegisterDto form) {
         memberService.update(memberId, form);
 
         return "redirect:/members";

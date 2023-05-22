@@ -1,7 +1,7 @@
 package hruler.portfolio.service;
 
 import hruler.portfolio.domain.cafe.Cafe;
-import hruler.portfolio.form.CafeRegisterForm;
+import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class CafeService {
     }
 
     @Transactional
-    public void update(Long cafeId, CafeRegisterForm form) {
+    public void update(Long cafeId, CafeRegisterDto form) {
 //        log.info("form info = {}", form.getName());
         Cafe findCafe = findOne(cafeId);
         findCafe.updateInfo(form);

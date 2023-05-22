@@ -1,4 +1,4 @@
-package hruler.portfolio.form;
+package hruler.portfolio.dto;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
-public class CafeDetailForm {
+public class CafeDetailDto {
 
     private Long id;
     private String name;
     private Address address;
     private List<Menu> menus = new ArrayList<>();
 
-    public CafeDetailForm(Cafe cafe) {
+    public CafeDetailDto(Cafe cafe) {
         this.id = cafe.getId();
         this.name = cafe.getName();
         this.address = cafe.getAddress();

@@ -2,8 +2,9 @@ package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
-import hruler.portfolio.form.CafeDetailForm;
-import hruler.portfolio.form.CafeRegisterForm;
+import hruler.portfolio.dto.CafeDetailDto;
+import hruler.portfolio.dto.CafeMenuAddDto;
+import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.service.CafeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,12 @@ public class CafeController {
 
     @GetMapping("new")
     public String registerCafe(Model model) {
-        model.addAttribute("cafeRegisterForm", new CafeRegisterForm());
+        model.addAttribute("cafeRegisterForm", new CafeRegisterDto());
         return "cafes/registerCafeForm";
     }
 
     @PostMapping("new")
-    public String cafeRegister(@Valid CafeRegisterForm form, BindingResult result) {
+    public String cafeRegister(@Valid CafeRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {
             return "cafes/registerCafeForm";
         }
@@ -52,14 +53,14 @@ public class CafeController {
     @GetMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
         Cafe findCafe = cafeService.findOne(cafeId);
-        CafeRegisterForm form = CafeRegisterForm.convert(findCafe);
+        CafeRegisterDto form = CafeRegisterDto.convert(findCafe);
         model.addAttribute("form", form);
         return "cafes/updateCafeForm";
     }
 
     @PostMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId,
-                       @ModelAttribute("form") CafeRegisterForm form) {
+                       @ModelAttribute("form") CafeRegisterDto form) {
 //        log.info("cafeInfo = {}", form.getName());
         cafeService.update(cafeId, form);
 
@@ -70,8 +71,14 @@ public class CafeController {
     public String detail(@PathVariable("cafeId") Long cafeId,
                          Model model) {
         Cafe findCafe = cafeService.findOne(cafeId);
-        CafeDetailForm form = new CafeDetailForm(findCafe);
+        CafeDetailDto form = new CafeDetailDto(findCafe);
         model.addAttribute("form", form);
         return "cafes/cafeDetailForm";
+    }
+
+    @GetMapping("addMenuForm")
+    public String addMenu(Model model) {
+        model.addAttribute("menuAddForm", new CafeMenuAddDto());
+        return "cafes/addMenuForm";
     }
 }
