@@ -81,4 +81,9 @@ public class CafeController {
         model.addAttribute("menuAddForm", new CafeMenuAddDto());
         return "cafes/addMenuForm";
     }
+
+    @PostMapping("addMenu")
+    public String addMenu(@Valid CafeMenuAddDto, BindingResult result) {
+        return
+    }
 }

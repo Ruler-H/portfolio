@@ -17,13 +17,15 @@
       <label th:for="price" th:text="#{label.cafe.menu.price}">가격</label>
       <input type="text" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
     </div>
-<!--    <div class="form-group">-->
-<!--      <label th:for="type" th:text="#{label.cafe.menu.type}">메뉴 종류</label>-->
-<!--      <select-->
-<!--    </div>-->
     <div class="form-group">
-      <label th:for="zipcode" th:text="#{label.cafe.zipcode}">우편번호</label>
-      <input type="text" th:field="*{zipcode}" class="form-control" placeholder="우편번호를 입력하세요">
+      <label th:for="type" th:text="#{label.cafe.menu.type}">메뉴 종류</label>
+      <select th:field="*{type}" class="form-control">
+        <option value="" th:text="#{label.cafe.menu.type}">메뉴 종류</option>
+        <option th:each="type : ${T(hruler.portfolio.domain.cafe.Type).values()}"
+                th:value="${type}"
+                th:text="${type}">option
+        </option>
+      </select>
     </div>
     <br/>
     <button type="submit" class="btn btn-primary" th:text="#{button.save}">저장</button>
