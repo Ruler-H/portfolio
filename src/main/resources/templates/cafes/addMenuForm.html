@@ -8,7 +8,7 @@
   <div class="py-5 text-center">
     <h2 th:text="#{page.addMenu}">메뉴 추가</h2>
   </div>
-  <form th:action="@{/cafes/addMenu}" th:object="${menuAddForm}" method="post">
+  <form th:action="@{/cafes/{cafeId}/addMenu (cafeId=${cafeId})}" th:object="${menuAddForm}" method="post">
     <div class="form-group">
       <label th:for="name" th:text="#{label.cafe.menu.name}">메뉴명</label>
       <input type="text" th:field="*{name}" class="form-control" placeholder="메뉴명을 입력하세요">

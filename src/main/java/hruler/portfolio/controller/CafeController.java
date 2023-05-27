@@ -2,10 +2,12 @@ package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
+import hruler.portfolio.domain.cafe.Menu;
 import hruler.portfolio.dto.CafeDetailDto;
 import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.service.CafeService;
+import hruler.portfolio.service.MenuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.List;
 public class CafeController {
 
     private final CafeService cafeService;
+    private final MenuService menuService;
 
     @GetMapping("new")
     public String registerCafe(Model model) {
@@ -70,20 +73,33 @@ public class CafeController {
     @GetMapping("{cafeId}/detail")
     public String detail(@PathVariable("cafeId") Long cafeId,
                          Model model) {
+        log.info("cafeId = {}", cafeId);
         Cafe findCafe = cafeService.findOne(cafeId);
+        log.info("findCafe = {}", findCafe);
         CafeDetailDto form = new CafeDetailDto(findCafe);
         model.addAttribute("form", form);
         return "cafes/cafeDetailForm";
     }
 
-    @GetMapping("addMenuForm")
-    public String addMenu(Model model) {
+    @GetMapping("{cafeId}/addMenuForm")
+    public String addMenu(Model model,
+                          @PathVariable Long cafeId) {
         model.addAttribute("menuAddForm", new CafeMenuAddDto());
+        model.addAttribute("cafeId", cafeId);
         return "cafes/addMenuForm";
     }
 
-    @PostMapping("addMenu")
-    public String addMenu(@Valid CafeMenuAddDto, BindingResult result) {
-        return
+    @PostMapping("{cafeId}/addMenu")
+    public String addMenu(@Valid CafeMenuAddDto cafeMenuAddDto,
+                          @PathVariable Long cafeId,
+                          Model model,
+                          BindingResult result) {
+        Cafe findCafe = cafeService.findOne(cafeId);
+        Menu menu = new Menu(cafeMenuAddDto, findCafe);
+        findCafe.addMenu(menu);
+        menuService.registerMenu(menu);
+        CafeDetailDto cafeDetailDto = new CafeDetailDto(findCafe);
+        model.addAttribute("form", cafeDetailDto);
+        return "redirect:/cafes/" + cafeId + "/detail";
     }
 }

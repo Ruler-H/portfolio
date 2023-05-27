@@ -1,10 +1,13 @@
 package hruler.portfolio.domain.cafe;
 
 import hruler.portfolio.domain.Address;
+import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
+import hruler.portfolio.service.MenuService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Slf4j
 @Table(name = "cafes")
 public class Cafe {
 
@@ -48,5 +52,10 @@ public class Cafe {
                 form.getStreet(),
                 form.getZipcode()
         );
+    }
+
+    public void addMenu(Menu menu) {
+        log.info("menu = {}", menu.getName());
+        this.menus.add(menu);
     }
 }

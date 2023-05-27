@@ -28,10 +28,8 @@
   <div class="form-group">
     <div class="row">
       <div class="col">
-        <button class="btn btn-primary float-end"
-                onclick="location.href='addMenuForm.html'"
-                th:onclick="|location.href='@{/cafes/addMenuForm}'|"
-                type="button" th:text="#{button.addMenu}">메뉴 추가</button>
+        <a href="#" th:href="@{/cafes/{cafeId}/addMenuForm (cafeId=${cafeId})}" class="btn btn-primary float-end"
+           role="button" th:text="#{button.addMenu}">메뉴 추가</a>
       </div>
     </div>
     <label th:for="menus" th:text="#{label.cafe.menu}">카페 메뉴</label>
@@ -46,7 +44,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="menu : ${menus}">
+        <tr th:each="menu : ${form.menus}">
           <td th:text="${menu.id}"></td>
           <td th:text="${menu.name}"></td>
           <td th:text="${menu.price}"></td>
