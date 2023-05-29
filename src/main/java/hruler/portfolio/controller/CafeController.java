@@ -28,78 +28,64 @@ public class CafeController {
     private final MenuService menuService;
 
     @GetMapping("new")
-    public String registerCafe(Model model) {
+    public String register(Model model) {
         model.addAttribute("cafeRegisterForm", new CafeRegisterDto());
+
         return "cafes/registerCafeForm";
     }
 
     @PostMapping("new")
-    public String cafeRegister(@Valid CafeRegisterDto form, BindingResult result) {
-        if (result.hasErrors()) {
-            return "cafes/registerCafeForm";
-        }
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
-        Cafe cafe = Cafe.createCafe(form.getName(), address);
+    public String register(@Valid CafeRegisterDto form, BindingResult result) {
+        if (result.hasErrors()) {return "cafes/registerCafeForm";}
 
-        cafeService.registerCafe(cafe);
+        cafeService.registerCafe(Cafe.createCafe(form.getName(),
+                new Address(form.getCity(), form.getStreet(), form.getZipcode())));
 
         return "redirect:/";
     }
 
     @GetMapping
     public String list(Model model) {
-        List<Cafe> cafes = cafeService.findCafes();
-        model.addAttribute("cafes", cafes);
+        model.addAttribute("cafes", cafeService.findCafes());
+
         return "cafes/cafeListForm";
     }
 
     @GetMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
-        Cafe findCafe = cafeService.findOne(cafeId);
-        CafeRegisterDto form = CafeRegisterDto.convert(findCafe);
-        model.addAttribute("form", form);
+        model.addAttribute("form",
+                CafeRegisterDto.convert(cafeService.findOne(cafeId)));
+
         return "cafes/updateCafeForm";
     }
 
     @PostMapping("{cafeId}/edit")
-    public String edit(@PathVariable("cafeId") Long cafeId,
-                       @ModelAttribute("form") CafeRegisterDto form) {
-//        log.info("cafeInfo = {}", form.getName());
+    public String edit(@PathVariable("cafeId") Long cafeId, @ModelAttribute("form") CafeRegisterDto form) {
         cafeService.update(cafeId, form);
 
         return "redirect:/cafes";
     }
 
     @GetMapping("{cafeId}/detail")
-    public String detail(@PathVariable("cafeId") Long cafeId,
-                         Model model) {
-        log.info("cafeId = {}", cafeId);
-        Cafe findCafe = cafeService.findOne(cafeId);
-        log.info("findCafe = {}", findCafe);
-        CafeDetailDto form = new CafeDetailDto(findCafe);
-        model.addAttribute("form", form);
+    public String detail(@PathVariable("cafeId") Long cafeId, Model model) {
+        model.addAttribute("form", new CafeDetailDto(cafeService.findOne(cafeId)));
+
         return "cafes/cafeDetailForm";
     }
 
     @GetMapping("{cafeId}/addMenuForm")
-    public String addMenu(Model model,
-                          @PathVariable Long cafeId) {
+    public String addMenu(Model model, @PathVariable Long cafeId) {
         model.addAttribute("menuAddForm", new CafeMenuAddDto());
         model.addAttribute("cafeId", cafeId);
         return "cafes/addMenuForm";
     }
 
     @PostMapping("{cafeId}/addMenu")
-    public String addMenu(@Valid CafeMenuAddDto cafeMenuAddDto,
-                          @PathVariable Long cafeId,
-                          Model model,
-                          BindingResult result) {
+    public String addMenu(@Valid CafeMenuAddDto cafeMenuAddDto, @PathVariable Long cafeId,
+                          Model model, BindingResult result) {
         Cafe findCafe = cafeService.findOne(cafeId);
-        Menu menu = new Menu(cafeMenuAddDto, findCafe);
-        findCafe.addMenu(menu);
-        menuService.registerMenu(menu);
-        CafeDetailDto cafeDetailDto = new CafeDetailDto(findCafe);
-        model.addAttribute("form", cafeDetailDto);
+        menuService.registerMenu(new Menu(cafeMenuAddDto, findCafe), findCafe);
+        model.addAttribute("form", new CafeDetailDto(findCafe));
         return "redirect:/cafes/" + cafeId + "/detail";
     }
 }

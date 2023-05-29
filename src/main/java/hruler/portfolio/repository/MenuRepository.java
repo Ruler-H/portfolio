@@ -1,5 +1,6 @@
 package hruler.portfolio.repository;
 
+import hruler.portfolio.domain.cafe.Cafe;
 import hruler.portfolio.domain.cafe.Menu;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,13 @@ public class MenuRepository {
      * 메뉴 등록
      * @param menu
      */
-    public void register(Menu menu) {
+    public void register(Menu menu, Cafe cafe) {
         if (menu.getId() == null) {
             em.persist(menu);
         }else{
             em.merge(menu);
         }
+        cafe.addMenu(menu);
     }
 
     /**
