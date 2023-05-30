@@ -47,15 +47,10 @@ public class Cafe {
 
     public void updateInfo(CafeRegisterDto form) {
         this.name = form.getName();
-        this.address = new Address(
-                form.getCity(),
-                form.getStreet(),
-                form.getZipcode()
-        );
+        this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
     }
 
     public void addMenu(Menu menu) {
-        log.info("menu = {}", menu.getName());
         this.menus.add(menu);
     }
 }

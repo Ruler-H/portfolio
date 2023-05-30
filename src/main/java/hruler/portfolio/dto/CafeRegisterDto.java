@@ -1,5 +1,6 @@
 package hruler.portfolio.dto;
 
+import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,8 @@ public class CafeRegisterDto {
     private String city;
     private String street;
     private String zipcode;
+    private Address address;
+
 
     public static CafeRegisterDto convert(Cafe cafe) {
         CafeRegisterDto cafeRegisterForm = new CafeRegisterDto();
@@ -21,7 +24,6 @@ public class CafeRegisterDto {
         cafeRegisterForm.setCity(cafe.getAddress().getCity());
         cafeRegisterForm.setStreet(cafe.getAddress().getStreet());
         cafeRegisterForm.setZipcode(cafe.getAddress().getZipcode());
-
         return cafeRegisterForm;
     }
 }

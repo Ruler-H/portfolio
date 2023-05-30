@@ -27,6 +27,11 @@ public class CafeController {
     private final CafeService cafeService;
     private final MenuService menuService;
 
+    /**
+     * Cafe Register GetMapping
+     * @param model
+     * @return registerCafeForm.html
+     */
     @GetMapping("new")
     public String register(Model model) {
         model.addAttribute("cafeRegisterForm", new CafeRegisterDto());
@@ -34,6 +39,12 @@ public class CafeController {
         return "cafes/registerCafeForm";
     }
 
+    /**
+     * Cafe Register PostMapping
+     * @param form -> CafeRegisterDto
+     * @param result -> BindingResult
+     * @return home.html
+     */
     @PostMapping("new")
     public String register(@Valid CafeRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "cafes/registerCafeForm";}
@@ -44,6 +55,11 @@ public class CafeController {
         return "redirect:/";
     }
 
+    /**
+     * Cafe List GetMapping
+     * @param model
+     * @return
+     */
     @GetMapping
     public String list(Model model) {
         model.addAttribute("cafes", cafeService.findCafes());

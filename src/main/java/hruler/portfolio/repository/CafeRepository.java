@@ -31,7 +31,4 @@ public class CafeRepository {
                 .setParameter("name", name)
                 .getResultList();
     }
-
-
-
 }

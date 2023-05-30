@@ -21,47 +21,38 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping(value = "new")
-    public String createForm(Model model) {
+    public String create(Model model) {
         model.addAttribute("memberRegisterForm", new MemberRegisterDto());
         return "members/createMemberForm";
     }
 
     @PostMapping(value = "new")
     public String create(@Valid MemberRegisterDto form, BindingResult result) {
+        if (result.hasErrors()) {return "members/createMemberForm";}
 
-        if (result.hasErrors()) {
-            return "members/createMemberForm";
-        }
-
-        Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
-        Member member = new Member(form.getName(), address);
-
-        memberService.join(member);
+        memberService.join(new Member(form.getName(),
+                new Address(form.getCity(), form.getStreet(), form.getZipcode())));
 
         return "redirect:/";
     }
 
     @GetMapping
     public String list(Model model) {
-        List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members);
+        model.addAttribute("members", memberService.findMembers());
+
         return "members/memberList";
     }
 
     @GetMapping("/{memberId}/edit")
     public String edit(@PathVariable("memberId") Long memberId, Model model) {
-        Member findMember = memberService.findOne(memberId);
-
-        MemberRegisterDto form = MemberRegisterDto.convert(findMember);
-
-        model.addAttribute("form", form);
+        model.addAttribute("form",
+                MemberRegisterDto.convert(memberService.findOne(memberId)));
 
         return "members/updateMemberForm";
     }
 
     @PostMapping("/{memberId}/edit")
-    public String edit(@PathVariable("memberId") Long memberId,
-                       @ModelAttribute("form") MemberRegisterDto form) {
+    public String edit(@PathVariable("memberId") Long memberId, @ModelAttribute("form") MemberRegisterDto form) {
         memberService.update(memberId, form);
 
         return "redirect:/members";

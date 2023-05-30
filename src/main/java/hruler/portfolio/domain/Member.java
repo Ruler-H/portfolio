@@ -18,8 +18,6 @@ public class Member {
     private Address address;
     private String name;
 
-
-
     public Member(String name, Address address) {
         this.address = address;
         this.name = name;

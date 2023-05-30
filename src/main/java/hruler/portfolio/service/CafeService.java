@@ -24,7 +24,6 @@ public class CafeService {
      */
     @Transactional
     public Long registerCafe(Cafe cafe) {
-
         validateDuplicateCafe(cafe); // 중복 등록 검증
         cafeRepository.save(cafe);
         return cafe.getId();
@@ -44,13 +43,10 @@ public class CafeService {
         return cafeRepository.findAll();
     }
 
-    public Cafe findOne(Long cafeId) {
-        return cafeRepository.findOne(cafeId);
-    }
+    public Cafe findOne(Long cafeId) { return cafeRepository.findOne(cafeId); }
 
     @Transactional
     public void update(Long cafeId, CafeRegisterDto form) {
-//        log.info("form info = {}", form.getName());
         Cafe findCafe = findOne(cafeId);
         findCafe.updateInfo(form);
     }

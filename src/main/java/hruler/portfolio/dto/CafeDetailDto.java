@@ -15,7 +15,7 @@ public class CafeDetailDto {
     private Long id;
     private String name;
     private Address address;
-    private List<Menu> menus = new ArrayList<>();
+    private List<Menu> menus;
 
     public CafeDetailDto(Cafe cafe) {
         this.id = cafe.getId();
