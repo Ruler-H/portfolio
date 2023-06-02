@@ -58,7 +58,7 @@ public class CafeController {
     /**
      * Cafe List GetMapping
      * @param model
-     * @return
+     * @return updateCafeForm.html
      */
     @GetMapping
     public String list(Model model) {
@@ -67,6 +67,12 @@ public class CafeController {
         return "cafes/cafeListForm";
     }
 
+    /**
+     * Cafe edit GetMapping
+     * @param cafeId
+     * @param model
+     * @return updateCafeForm.html
+     */
     @GetMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
         model.addAttribute("form",
@@ -75,6 +81,12 @@ public class CafeController {
         return "cafes/updateCafeForm";
     }
 
+    /**
+     * Cafe edit PostMapping
+     * @param cafeId
+     * @param form
+     * @return cafes.html
+     */
     @PostMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, @ModelAttribute("form") CafeRegisterDto form) {
         cafeService.update(cafeId, form);
@@ -82,6 +94,12 @@ public class CafeController {
         return "redirect:/cafes";
     }
 
+    /**
+     * Cafe Detatil GetMapping
+     * @param cafeId
+     * @param model
+     * @return cafeDetailForm.html
+     */
     @GetMapping("{cafeId}/detail")
     public String detail(@PathVariable("cafeId") Long cafeId, Model model) {
         model.addAttribute("form", new CafeDetailDto(cafeService.findOne(cafeId)));
@@ -89,6 +107,12 @@ public class CafeController {
         return "cafes/cafeDetailForm";
     }
 
+    /**
+     * Cafe Menu Add GetMapping
+     * @param model
+     * @param cafeId
+     * @return addMenuForm.html
+     */
     @GetMapping("{cafeId}/addMenuForm")
     public String addMenu(Model model, @PathVariable Long cafeId) {
         model.addAttribute("menuAddForm", new CafeMenuAddDto());
@@ -96,6 +120,14 @@ public class CafeController {
         return "cafes/addMenuForm";
     }
 
+    /**
+     * Cafe Menu Add PostMapping
+     * @param cafeMenuAddDto
+     * @param cafeId
+     * @param model
+     * @param result
+     * @return cafeDetailForm.html
+     */
     @PostMapping("{cafeId}/addMenu")
     public String addMenu(@Valid CafeMenuAddDto cafeMenuAddDto, @PathVariable Long cafeId,
                           Model model, BindingResult result) {

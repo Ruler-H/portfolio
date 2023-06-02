@@ -18,9 +18,10 @@ public class CafeService {
 
     private final CafeRepository cafeRepository;
 
-
     /**
-     * 카페 등록
+     * Save Cafe
+     * @param cafe
+     * @return Registered Cafe Id
      */
     @Transactional
     public Long registerCafe(Cafe cafe) {
@@ -37,14 +38,25 @@ public class CafeService {
     }
 
     /**
-     * 전체 카페 조회
+     * Search Total Cafe
+     * @return Total Cafe Entity as a Collection
      */
     public List<Cafe> findCafes() {
         return cafeRepository.findAll();
     }
 
+    /**
+     * Search Cafe By CafeId
+     * @param cafeId
+     * @return Searched Cafe Entity
+     */
     public Cafe findOne(Long cafeId) { return cafeRepository.findOne(cafeId); }
 
+    /**
+     * Update Cafe Information
+     * @param cafeId
+     * @param form
+     */
     @Transactional
     public void update(Long cafeId, CafeRegisterDto form) {
         Cafe findCafe = findOne(cafeId);

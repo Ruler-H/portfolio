@@ -15,7 +15,7 @@ public class MenuRepository {
     private final EntityManager em;
 
     /**
-     * 메뉴 등록
+     * Register Menu
      * @param menu
      */
     public void register(Menu menu, Cafe cafe) {
@@ -28,14 +28,18 @@ public class MenuRepository {
     }
 
     /**
-     * 메뉴 검색
+     * Search Menu By MenuId
      * @param id
-     * @return findMenu
+     * @return Menu Entity
      */
     public Menu findOne(Long id) {
         return em.find(Menu.class, id);
     }
 
+    /**
+     * Search Total Menu
+     * @return Menu Entity as a Collection
+     */
     public List<Menu> findAll() {
         return em.createQuery("select m from Menu", Menu.class)
                 .getResultList();

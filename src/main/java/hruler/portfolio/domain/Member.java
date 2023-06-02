@@ -23,6 +23,10 @@ public class Member {
         this.name = name;
     }
 
+    /**
+     * Member Information Update
+     * @param form
+     */
     public void updateInfo(MemberRegisterDto form) {
         this.name = form.getName();
         this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());

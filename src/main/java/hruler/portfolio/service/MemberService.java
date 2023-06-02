@@ -19,9 +19,9 @@ public class MemberService {
     private final EntityManager em;
 
     /**
-     * 회원 등록
+     * Join Member
      * @param member
-     * @return
+     * @return Joined Member Id
      */
     @Transactional
     public Long join(Member member) {
@@ -30,6 +30,11 @@ public class MemberService {
         return member.getId();
     }
 
+    /**
+     * Update Member Information
+     * @param memberId
+     * @param form
+     */
     @Transactional
     public void update(Long memberId, MemberRegisterDto form) {
         Member findMember = findOne(memberId);
@@ -44,17 +49,17 @@ public class MemberService {
     }
 
     /**
-     * 전체 회원 조회
-     * @return
+     * Search Total Member
+     * @return Total Member Entity as a Collection
      */
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
     /**
-     * 회원 조회 By memberId
+     * Search Member By MemberId
      * @param memberId
-     * @return
+     * @return Searched Member Entity
      */
     public Member findOne(Long memberId) {
         return memberRepository.findOne(memberId);

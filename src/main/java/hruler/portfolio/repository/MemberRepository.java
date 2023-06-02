@@ -15,7 +15,7 @@ public class MemberRepository {
     private final EntityManager em;
 
     /**
-     * 회원 저장
+     * Save Member
      * @param member
      */
     public void save(Member member) {
@@ -23,17 +23,17 @@ public class MemberRepository {
     }
 
     /**
-     * 회원 조회 By 아이디
+     * Search Member By MemberId
      * @param memberId
-     * @return
+     * @return Member Entity
      */
     public Member findOne(Long memberId) {
         return em.find(Member.class, memberId);
     }
 
     /**
-     * 회원 전체 조회
-     * @return
+     * Search Total Member
+     * @return Member Entity as a Collection
      */
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class)
@@ -41,9 +41,9 @@ public class MemberRepository {
     }
 
     /**
-     * 회원 조회 By 이름
+     * Search Member By Name
      * @param memberName
-     * @return
+     * @return Member Entity as a Collection
      */
     public List<Member> findByName(String memberName) {
         return em.createQuery("select m from Member m where m.name = :name", Member.class)

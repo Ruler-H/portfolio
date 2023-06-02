@@ -20,12 +20,23 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * Member Create GetMapping
+     * @param model
+     * @return createMemberForm.html
+     */
     @GetMapping(value = "new")
     public String create(Model model) {
         model.addAttribute("memberRegisterForm", new MemberRegisterDto());
         return "members/createMemberForm";
     }
 
+    /**
+     * Member Create PostMapping
+     * @param form
+     * @param result
+     * @return home.html
+     */
     @PostMapping(value = "new")
     public String create(@Valid MemberRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "members/createMemberForm";}
@@ -36,6 +47,11 @@ public class MemberController {
         return "redirect:/";
     }
 
+    /**
+     * Member List GetMapping
+     * @param model
+     * @return memberList.html
+     */
     @GetMapping
     public String list(Model model) {
         model.addAttribute("members", memberService.findMembers());
@@ -43,6 +59,12 @@ public class MemberController {
         return "members/memberList";
     }
 
+    /**
+     * Member Edit GetMapping
+     * @param memberId
+     * @param model
+     * @return updateMemberForm.html
+     */
     @GetMapping("/{memberId}/edit")
     public String edit(@PathVariable("memberId") Long memberId, Model model) {
         model.addAttribute("form",
@@ -51,6 +73,12 @@ public class MemberController {
         return "members/updateMemberForm";
     }
 
+    /**
+     * Member Edit PostMapping
+     * @param memberId
+     * @param form
+     * @return members.html
+     */
     @PostMapping("/{memberId}/edit")
     public String edit(@PathVariable("memberId") Long memberId, @ModelAttribute("form") MemberRegisterDto form) {
         memberService.update(memberId, form);

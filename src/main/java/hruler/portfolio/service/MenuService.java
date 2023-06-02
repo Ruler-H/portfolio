@@ -16,16 +16,30 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
 
+    /**
+     * Register Menu
+     * @param menu
+     * @param cafe
+     */
     @Transactional
     public void registerMenu(Menu menu, Cafe cafe) {
         menuRepository.register(menu, cafe);
 
     }
 
+    /**
+     * Search Menu By MenuId
+     * @param menuId
+     * @return Searched Menu Entity
+     */
     public Menu findOne(Long menuId) {
         return menuRepository.findOne(menuId);
     }
 
+    /**
+     * Search Total Menu
+     * @return Searched Total Menu Entity as a Collection
+     */
     public List<Menu> findMenus(){
         return menuRepository.findAll();
     }

@@ -45,11 +45,19 @@ public class Cafe {
         return cafe;
     }
 
+    /**
+     * Cafe Information Update
+     * @param form
+     */
     public void updateInfo(CafeRegisterDto form) {
         this.name = form.getName();
         this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
     }
 
+    /**
+     * Menu Add
+     * @param menu
+     */
     public void addMenu(Menu menu) {
         this.menus.add(menu);
     }
