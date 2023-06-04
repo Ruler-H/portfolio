@@ -1,7 +1,9 @@
 package hruler.portfolio.dto;
 
 import hruler.portfolio.domain.Member;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +13,14 @@ public class MemberRegisterDto {
 
     private Long id;
 
-    @NotEmpty(message = "회원 이름은 필수 입니다")
+    @NotBlank
     private String name;
 
+    @NotNull
     private String city;
+    @NotNull
     private String street;
+    @NotNull
     private String zipcode;
 
     public static MemberRegisterDto convert(Member member) {

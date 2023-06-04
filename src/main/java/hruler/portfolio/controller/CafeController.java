@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class CafeController {
      * @return home.html
      */
     @PostMapping("new")
-    public String register(@Valid CafeRegisterDto form, BindingResult result) {
+    public String register(@Validated @ModelAttribute("cafeRegisterForm") CafeRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "cafes/registerCafeForm";}
 
         cafeService.registerCafe(Cafe.createCafe(form.getName(),

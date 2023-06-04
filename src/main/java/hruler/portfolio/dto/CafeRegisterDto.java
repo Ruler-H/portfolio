@@ -2,6 +2,8 @@ package hruler.portfolio.dto;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,11 +12,14 @@ public class CafeRegisterDto {
 
     private Long id;
 
+    @NotBlank
     private String name;
+    @NotNull
     private String city;
+    @NotNull
     private String street;
+    @NotNull
     private String zipcode;
-    private Address address;
 
 
     public static CafeRegisterDto convert(Cafe cafe) {

@@ -4,11 +4,11 @@ import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.Member;
 import hruler.portfolio.dto.MemberRegisterDto;
 import hruler.portfolio.service.MemberService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class MemberController {
      * @return home.html
      */
     @PostMapping(value = "new")
-    public String create(@Valid MemberRegisterDto form, BindingResult result) {
+    public String create(@Validated @ModelAttribute("memberRegisterForm") MemberRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "members/createMemberForm";}
 
         memberService.join(new Member(form.getName(),
