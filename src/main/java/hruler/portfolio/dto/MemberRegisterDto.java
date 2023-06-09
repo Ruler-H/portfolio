@@ -12,6 +12,10 @@ import lombok.Setter;
 public class MemberRegisterDto {
 
     private Long id;
+    @NotEmpty
+    private String loginId;
+    @NotEmpty
+    private String password;
 
     @NotBlank
     private String name;
@@ -26,6 +30,8 @@ public class MemberRegisterDto {
     public static MemberRegisterDto convert(Member member) {
         MemberRegisterDto memberRegisterForm = new MemberRegisterDto();
         memberRegisterForm.setId(member.getId());
+        memberRegisterForm.setLoginId(member.getLoginId());
+        memberRegisterForm.setPassword(member.getPassword());
         memberRegisterForm.setName(member.getName());
         memberRegisterForm.setCity(member.getAddress().getCity());
         memberRegisterForm.setStreet(member.getAddress().getStreet());

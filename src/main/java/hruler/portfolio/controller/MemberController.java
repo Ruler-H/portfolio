@@ -2,6 +2,7 @@ package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.Member;
+import hruler.portfolio.dto.MemberLoginDto;
 import hruler.portfolio.dto.MemberRegisterDto;
 import hruler.portfolio.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class MemberController {
     public String create(@Validated @ModelAttribute("memberRegisterForm") MemberRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "members/createMemberForm";}
 
-        memberService.join(new Member(form.getName(),
+        memberService.join(new Member(form.getLoginId(), form.getPassword(), form.getName(),
                 new Address(form.getCity(), form.getStreet(), form.getZipcode())));
 
         return "redirect:/";
@@ -84,5 +85,10 @@ public class MemberController {
         memberService.update(memberId, form);
 
         return "redirect:/members";
+    }
+
+    @GetMapping("/login")
+    public String login(Model model, @ModelAttribute("memberLoginDto") MemberLoginDto form) {
+        return "members/loginForm";
     }
 }

@@ -14,11 +14,15 @@ public class Member {
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+    private String loginId;
+    private String password;
     @Embedded
     private Address address;
     private String name;
 
-    public Member(String name, Address address) {
+    public Member(String loginId, String password, String name, Address address) {
+        this.loginId = loginId;
+        this.password = password;
         this.address = address;
         this.name = name;
     }

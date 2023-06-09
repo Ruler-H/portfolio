@@ -8,7 +8,6 @@ import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.service.CafeService;
 import hruler.portfolio.service.MenuService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -116,7 +113,7 @@ public class CafeController {
      */
     @GetMapping("{cafeId}/addMenuForm")
     public String addMenu(Model model, @PathVariable Long cafeId) {
-        model.addAttribute("menuAddForm", new CafeMenuAddDto());
+        model.addAttribute("cafeMenuAddDto", new CafeMenuAddDto());
         model.addAttribute("cafeId", cafeId);
         return "cafes/addMenuForm";
     }
@@ -130,8 +127,13 @@ public class CafeController {
      * @return cafeDetailForm.html
      */
     @PostMapping("{cafeId}/addMenu")
-    public String addMenu(@Valid CafeMenuAddDto cafeMenuAddDto, @PathVariable Long cafeId,
+    public String addMenu(@Validated @ModelAttribute("cafeMenuAddDto") CafeMenuAddDto cafeMenuAddDto,
+                          @PathVariable Long cafeId,
                           Model model, BindingResult result) {
+        log.info("error = {}", result.hasErrors());
+        if (result.hasErrors()) {
+            return "cafes/addMenuForm";
+        }
         Cafe findCafe = cafeService.findOne(cafeId);
         menuService.registerMenu(new Menu(cafeMenuAddDto, findCafe), findCafe);
         model.addAttribute("form", new CafeDetailDto(findCafe));
