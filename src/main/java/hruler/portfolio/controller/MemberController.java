@@ -5,6 +5,8 @@ import hruler.portfolio.domain.Member;
 import hruler.portfolio.dto.MemberLoginDto;
 import hruler.portfolio.dto.MemberRegisterDto;
 import hruler.portfolio.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,5 +92,36 @@ public class MemberController {
     @GetMapping("/login")
     public String login(Model model, @ModelAttribute("memberLoginDto") MemberLoginDto form) {
         return "members/loginForm";
+    }
+
+    @PostMapping("/login")
+    public String login(@Validated @ModelAttribute("memberLoginDto") MemberLoginDto form,
+                        BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return "members/loginForm";
+        }
+
+        Member loginMember = memberService.login(form.getLoginId(), form.getPassword());
+
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "members/loginForm";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/";
     }
 }

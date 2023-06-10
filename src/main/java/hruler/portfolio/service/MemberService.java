@@ -65,4 +65,10 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    public Member login(String loginId, String password) {
+        return memberRepository.findByLoginId(loginId)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
+    }
+
 }
