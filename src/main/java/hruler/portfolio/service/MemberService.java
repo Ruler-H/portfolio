@@ -62,7 +62,7 @@ public class MemberService {
      * @return Searched Member Entity
      */
     public Member findOne(Long memberId) {
-        return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId).get();
     }
 
     public Member login(String loginId, String password) {

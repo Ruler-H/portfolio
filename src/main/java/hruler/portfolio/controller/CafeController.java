@@ -135,7 +135,9 @@ public class CafeController {
             return "cafes/addMenuForm";
         }
         Cafe findCafe = cafeService.findOne(cafeId);
-        menuService.registerMenu(new Menu(cafeMenuAddDto, findCafe), findCafe);
+        Menu menu = new Menu(cafeMenuAddDto, findCafe);
+        menuService.registerMenu(menu);
+        findCafe.addMenu(menu);
         model.addAttribute("form", new CafeDetailDto(findCafe));
         return "redirect:/cafes/" + cafeId + "/detail";
     }

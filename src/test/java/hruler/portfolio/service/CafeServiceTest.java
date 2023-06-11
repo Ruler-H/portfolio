@@ -2,7 +2,6 @@ package hruler.portfolio.service;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
-import hruler.portfolio.repository.CafeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class CafeServiceTest {
     @Autowired
     CafeService cafeService;
     @Autowired
-    CafeRepository cafeRepository;
+    CafeJpaRepository cafeRepository;
 
     @Test
     public void 카페등록() throws Exception {

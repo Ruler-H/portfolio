@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class CafeRepositoryTest {
     @Autowired
-    CafeRepository cafeRepository;
+    CafeJpaRepository cafeRepository;
 
 //    @Test
 //    @Transactional

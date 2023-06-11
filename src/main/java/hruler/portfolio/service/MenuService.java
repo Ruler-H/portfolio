@@ -19,11 +19,10 @@ public class MenuService {
     /**
      * Register Menu
      * @param menu
-     * @param cafe
      */
     @Transactional
-    public void registerMenu(Menu menu, Cafe cafe) {
-        menuRepository.register(menu, cafe);
+    public void registerMenu(Menu menu) {
+        menuRepository.save(menu);
 
     }
 
@@ -33,7 +32,7 @@ public class MenuService {
      * @return Searched Menu Entity
      */
     public Menu findOne(Long menuId) {
-        return menuRepository.findOne(menuId);
+        return menuRepository.findById(menuId).get();
     }
 
     /**

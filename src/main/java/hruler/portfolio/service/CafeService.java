@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CafeService {
-
     private final CafeRepository cafeRepository;
 
     /**
@@ -50,7 +49,7 @@ public class CafeService {
      * @param cafeId
      * @return Searched Cafe Entity
      */
-    public Cafe findOne(Long cafeId) { return cafeRepository.findOne(cafeId); }
+    public Cafe findOne(Long cafeId) { return cafeRepository.findById(cafeId).get(); }
 
     /**
      * Update Cafe Information
