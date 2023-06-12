@@ -27,13 +27,11 @@ public class CafeController {
 
     /**
      * Cafe Register GetMapping
-     * @param model
+     * @param cafeRegisterDto
      * @return registerCafeForm.html
      */
     @GetMapping("new")
-    public String register(Model model) {
-        model.addAttribute("cafeRegisterForm", new CafeRegisterDto());
-
+    public String register(@ModelAttribute("cafeRegisterForm") CafeRegisterDto cafeRegisterDto) {
         return "cafes/registerCafeForm";
     }
 
@@ -47,7 +45,7 @@ public class CafeController {
     public String register(@Validated @ModelAttribute("cafeRegisterForm") CafeRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "cafes/registerCafeForm";}
 
-        cafeService.registerCafe(Cafe.createCafe(form.getName(),
+        cafeService.registerCafe(new Cafe(form.getName(),
                 new Address(form.getCity(), form.getStreet(), form.getZipcode())));
 
         return "redirect:/";
@@ -61,7 +59,6 @@ public class CafeController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("cafes", cafeService.findCafes());
-
         return "cafes/cafeListForm";
     }
 
@@ -112,8 +109,8 @@ public class CafeController {
      * @return addMenuForm.html
      */
     @GetMapping("{cafeId}/addMenuForm")
-    public String addMenu(Model model, @PathVariable Long cafeId) {
-        model.addAttribute("cafeMenuAddDto", new CafeMenuAddDto());
+    public String addMenu(Model model, @PathVariable Long cafeId,
+                          @ModelAttribute("cafeMenuAddDto") CafeMenuAddDto cafeMenuAddDto){
         model.addAttribute("cafeId", cafeId);
         return "cafes/addMenuForm";
     }

@@ -37,6 +37,11 @@ public class Cafe {
         this.address = address;
     }
 
+    public Cafe(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
+
     public static Cafe createCafe(String name, Address address) {
         Cafe cafe = new Cafe();
         cafe.setName(name);
