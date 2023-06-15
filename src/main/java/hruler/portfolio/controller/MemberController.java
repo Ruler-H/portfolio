@@ -8,17 +8,17 @@ import hruler.portfolio.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -96,7 +96,9 @@ public class MemberController {
 
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("memberLoginDto") MemberLoginDto form,
+                        @RequestParam(defaultValue = "/") String redirectURL,
                         BindingResult bindingResult, HttpServletRequest request) {
+        log.info("redirectURL = {}", redirectURL);
         if (bindingResult.hasErrors()) {
             return "members/loginForm";
         }
@@ -111,7 +113,7 @@ public class MemberController {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")
