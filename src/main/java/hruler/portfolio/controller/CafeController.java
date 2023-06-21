@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class CafeController {
 
     private final CafeService cafeService;
+
     private final MenuService menuService;
 
     /**
@@ -32,6 +33,7 @@ public class CafeController {
      */
     @GetMapping("new")
     public String register(@ModelAttribute("cafeRegisterForm") CafeRegisterDto cafeRegisterDto) {
+
         return "cafes/registerCafeForm";
     }
 
@@ -45,8 +47,7 @@ public class CafeController {
     public String register(@Validated @ModelAttribute("cafeRegisterForm") CafeRegisterDto form, BindingResult result) {
         if (result.hasErrors()) {return "cafes/registerCafeForm";}
 
-        cafeService.registerCafe(new Cafe(form.getName(),
-                new Address(form.getCity(), form.getStreet(), form.getZipcode())));
+        cafeService.registerCafe(form);
 
         return "redirect:/";
     }
@@ -70,8 +71,7 @@ public class CafeController {
      */
     @GetMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
-        model.addAttribute("form",
-                CafeRegisterDto.convert(cafeService.findOne(cafeId)));
+        model.addAttribute("form", CafeRegisterDto.convert(cafeService.findOne(cafeId)));
 
         return "cafes/updateCafeForm";
     }
@@ -112,6 +112,7 @@ public class CafeController {
     public String addMenu(Model model, @PathVariable Long cafeId,
                           @ModelAttribute("cafeMenuAddDto") CafeMenuAddDto cafeMenuAddDto){
         model.addAttribute("cafeId", cafeId);
+
         return "cafes/addMenuForm";
     }
 
@@ -125,17 +126,13 @@ public class CafeController {
      */
     @PostMapping("{cafeId}/addMenu")
     public String addMenu(@Validated @ModelAttribute("cafeMenuAddDto") CafeMenuAddDto cafeMenuAddDto,
-                          @PathVariable Long cafeId,
-                          Model model, BindingResult result) {
-        log.info("error = {}", result.hasErrors());
-        if (result.hasErrors()) {
-            return "cafes/addMenuForm";
-        }
-        Cafe findCafe = cafeService.findOne(cafeId);
-        Menu menu = new Menu(cafeMenuAddDto, findCafe);
-        menuService.registerMenu(menu);
-        findCafe.addMenu(menu);
-        model.addAttribute("form", new CafeDetailDto(findCafe));
+                          BindingResult result, @PathVariable Long cafeId, Model model) {
+
+        if (result.hasErrors()) {return "cafes/addMenuForm";}
+
+        model.addAttribute("form",
+                new CafeDetailDto(cafeService.addMenu(cafeId, cafeMenuAddDto)));
+
         return "redirect:/cafes/" + cafeId + "/detail";
     }
 }

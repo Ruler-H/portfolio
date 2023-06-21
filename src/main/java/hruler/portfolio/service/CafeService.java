@@ -1,6 +1,9 @@
 package hruler.portfolio.service;
 
+import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
+import hruler.portfolio.domain.cafe.Menu;
+import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +22,12 @@ public class CafeService {
 
     /**
      * Save Cafe
-     * @param cafe
+     * @param cafeRegisterDto
      * @return Registered Cafe Id
      */
     @Transactional
-    public Long registerCafe(Cafe cafe) {
+    public Long registerCafe(CafeRegisterDto cafeRegisterDto) {
+        Cafe cafe = new Cafe(cafeRegisterDto.getName(), new Address(cafeRegisterDto.getCity(), cafeRegisterDto.getStreet(), cafeRegisterDto.getZipcode()));
         validateDuplicateCafe(cafe); // 중복 등록 검증
         cafeRepository.save(cafe);
         return cafe.getId();
@@ -60,5 +64,13 @@ public class CafeService {
     public void update(Long cafeId, CafeRegisterDto form) {
         Cafe findCafe = findOne(cafeId);
         findCafe.updateInfo(form);
+    }
+
+    @Transactional
+    public Cafe addMenu(Long cafeId, CafeMenuAddDto cafeMenuAddDto) {
+        Cafe findCafe = findOne(cafeId);
+        Menu menu = new Menu(cafeMenuAddDto, findCafe);
+        findCafe.addMenu(menu);
+        return findCafe;
     }
 }

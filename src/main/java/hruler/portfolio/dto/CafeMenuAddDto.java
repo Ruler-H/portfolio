@@ -19,4 +19,5 @@ public class CafeMenuAddDto {
     private Integer price;
     @NotNull(message = "메뉴 종류를 입력해주세요.")
     private Type type;
+
 }

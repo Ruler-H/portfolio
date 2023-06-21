@@ -21,7 +21,7 @@ public class TestDataInit {
         memberRepository.save(new Member("test1", "test!", "황병헌", new Address()));
         memberRepository.save(new Member("test2", "test@", "손연수", new Address()));
 
-        cafeRepository.save(new Cafe("오브제", new Address()));
-        cafeRepository.save(new Cafe("스타벅스", new Address()));
+        cafeRepository.save(new Cafe("오브제", new Address("하남", "미사강변동로", "72")));
+        cafeRepository.save(new Cafe("스타벅스", new Address("하남", "미사강변동로", "72")));
     }
 }
