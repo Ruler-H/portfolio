@@ -1,13 +1,13 @@
 package hruler.portfolio.domain.cafe;
 
 import hruler.portfolio.domain.Address;
-import hruler.portfolio.dto.CafeMenuAddDto;
+import hruler.portfolio.domain.BaseEntity;
 import hruler.portfolio.dto.CafeRegisterDto;
-import hruler.portfolio.service.MenuService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Persistable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Slf4j
 @Table(name = "cafes")
-public class Cafe {
+public class Cafe extends BaseEntity implements Persistable<Long> {
 
     @Id @GeneratedValue
     @Column(name = "cafe_id")
@@ -37,26 +37,21 @@ public class Cafe {
         this.address = address;
     }
 
-    public Cafe(String name, Address address) {
+    public Cafe(String name, Address address, String memberName) {
         this.name = name;
         this.address = address;
-    }
-
-    public static Cafe createCafe(String name, Address address) {
-        Cafe cafe = new Cafe();
-        cafe.setName(name);
-        cafe.setAddress(address);
-
-        return cafe;
+        this.setCreatedBy(memberName);
+        this.setLastModifiedBy(memberName);
     }
 
     /**
      * Cafe Information Update
      * @param form
      */
-    public void updateInfo(CafeRegisterDto form) {
+    public void updateInfo(CafeRegisterDto form, String memberName) {
         this.name = form.getName();
         this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
+        this.setLastModifiedBy(memberName);
     }
 
     /**
@@ -65,5 +60,10 @@ public class Cafe {
      */
     public void addMenu(Menu menu) {
         this.menus.add(menu);
+    }
+
+    @Override
+    public boolean isNew() {
+        return getCreatedDate() == null;
     }
 }

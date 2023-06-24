@@ -83,8 +83,12 @@ public class MemberController {
      * @return members.html
      */
     @PostMapping("/{memberId}/edit")
-    public String edit(@PathVariable("memberId") Long memberId, @ModelAttribute("form") MemberRegisterDto form) {
-        memberService.update(memberId, form);
+    public String edit(@PathVariable("memberId") Long memberId, @ModelAttribute("form") MemberRegisterDto form,
+                       HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String memberName = loginMember.getName();
+        memberService.update(memberId, form, memberName);
 
         return "redirect:/members";
     }

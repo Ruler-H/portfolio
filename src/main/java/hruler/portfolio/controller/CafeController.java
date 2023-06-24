@@ -1,6 +1,7 @@
 package hruler.portfolio.controller;
 
 import hruler.portfolio.domain.Address;
+import hruler.portfolio.domain.Member;
 import hruler.portfolio.domain.cafe.Cafe;
 import hruler.portfolio.domain.cafe.Menu;
 import hruler.portfolio.dto.CafeDetailDto;
@@ -8,6 +9,8 @@ import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
 import hruler.portfolio.service.CafeService;
 import hruler.portfolio.service.MenuService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -44,10 +47,14 @@ public class CafeController {
      * @return home.html
      */
     @PostMapping("new")
-    public String register(@Validated @ModelAttribute("cafeRegisterForm") CafeRegisterDto form, BindingResult result) {
+    public String register(@Validated @ModelAttribute("cafeRegisterForm") CafeRegisterDto form, BindingResult result,
+                           HttpServletRequest request) {
         if (result.hasErrors()) {return "cafes/registerCafeForm";}
 
-        cafeService.registerCafe(form);
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String memberName = loginMember.getName();
+        cafeService.registerCafe(form, memberName);
 
         return "redirect:/";
     }
@@ -83,8 +90,12 @@ public class CafeController {
      * @return cafes.html
      */
     @PostMapping("{cafeId}/edit")
-    public String edit(@PathVariable("cafeId") Long cafeId, @ModelAttribute("form") CafeRegisterDto form) {
-        cafeService.update(cafeId, form);
+    public String edit(@PathVariable("cafeId") Long cafeId, @ModelAttribute("form") CafeRegisterDto form,
+                       HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String memberName = loginMember.getName();
+        cafeService.update(cafeId, form, memberName);
 
         return "redirect:/cafes";
     }

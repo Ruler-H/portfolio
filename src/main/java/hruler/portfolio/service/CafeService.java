@@ -26,8 +26,8 @@ public class CafeService {
      * @return Registered Cafe Id
      */
     @Transactional
-    public Long registerCafe(CafeRegisterDto cafeRegisterDto) {
-        Cafe cafe = new Cafe(cafeRegisterDto.getName(), new Address(cafeRegisterDto.getCity(), cafeRegisterDto.getStreet(), cafeRegisterDto.getZipcode()));
+    public Long registerCafe(CafeRegisterDto cafeRegisterDto, String memberName) {
+        Cafe cafe = new Cafe(cafeRegisterDto.getName(), new Address(cafeRegisterDto.getCity(), cafeRegisterDto.getStreet(), cafeRegisterDto.getZipcode()), memberName);
         validateDuplicateCafe(cafe); // 중복 등록 검증
         cafeRepository.save(cafe);
         return cafe.getId();
@@ -61,9 +61,9 @@ public class CafeService {
      * @param form
      */
     @Transactional
-    public void update(Long cafeId, CafeRegisterDto form) {
+    public void update(Long cafeId, CafeRegisterDto form, String memberName) {
         Cafe findCafe = findOne(cafeId);
-        findCafe.updateInfo(form);
+        findCafe.updateInfo(form, memberName);
     }
 
     @Transactional

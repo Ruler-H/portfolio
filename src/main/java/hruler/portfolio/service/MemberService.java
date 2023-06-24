@@ -36,9 +36,9 @@ public class MemberService {
      * @param form
      */
     @Transactional
-    public void update(Long memberId, MemberRegisterDto form) {
+    public void update(Long memberId, MemberRegisterDto form, String memberName) {
         Member findMember = findOne(memberId);
-        findMember.updateInfo(form);
+        findMember.updateInfo(form, memberName);
     }
 
     private void validateDuplicateMember(Member member) {
