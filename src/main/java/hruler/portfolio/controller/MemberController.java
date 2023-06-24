@@ -42,10 +42,14 @@ public class MemberController {
      */
     @PostMapping(value = "new")
     public String create(@Validated @ModelAttribute("memberRegisterForm") MemberRegisterDto form, BindingResult result) {
+        Member member = new Member(form.getLoginId(), form.getPassword(), form.getName(),
+                new Address(form.getCity(), form.getStreet(), form.getZipcode()));
+        if (memberService.validateDuplicateMember(member)) {
+            result.reject("registeredMember", "이미 등록된 회원입니다.");
+        }
         if (result.hasErrors()) {return "members/createMemberForm";}
 
-        memberService.join(new Member(form.getLoginId(), form.getPassword(), form.getName(),
-                new Address(form.getCity(), form.getStreet(), form.getZipcode())));
+        memberService.join(member);
 
         return "redirect:/";
     }
