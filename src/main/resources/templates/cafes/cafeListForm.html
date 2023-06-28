@@ -9,6 +9,23 @@
   </div>
   <div class="row">
     <div class="col">
+      <form th:object="${cafeSearchDto}" class="form-inline">
+        <div class="form-group mb-2">
+          <input type="text" th:field="*{searchInfo}" class="form- control" placeholder="검색 정보를 입력하세요."/>
+        </div>
+        <div class="form-group mx-sm-1 mb-2">
+          <select th:field="*{searchStandard}" class="form-control">
+            <option value="">검색</option>
+            <option th:each="status : ${T(hruler.portfolio.dto.SearchStandard).values()}"
+                    th:value="${status}"
+                    th:text="${status}">option
+            </option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">검색</button>
+      </form>
+    </div>
+    <div class="col">
       <button class="btn btn-primary float-end"
               onclick="location.href='registerCafeForm.html'"
               th:onclick="|location.href='@{/cafes/new}'|"

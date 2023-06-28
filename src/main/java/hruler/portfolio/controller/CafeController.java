@@ -7,6 +7,7 @@ import hruler.portfolio.domain.cafe.Menu;
 import hruler.portfolio.dto.CafeDetailDto;
 import hruler.portfolio.dto.CafeMenuAddDto;
 import hruler.portfolio.dto.CafeRegisterDto;
+import hruler.portfolio.dto.CafeSearchDto;
 import hruler.portfolio.service.CafeService;
 import hruler.portfolio.service.MenuService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,7 +66,7 @@ public class CafeController {
      * @return updateCafeForm.html
      */
     @GetMapping
-    public String list(Model model) {
+    public String list(Model model, @ModelAttribute("cafeSearchDto")CafeSearchDto cafeSearchDto) {
         model.addAttribute("cafes", cafeService.findCafes());
         return "cafes/cafeListForm";
     }
@@ -137,12 +138,17 @@ public class CafeController {
      */
     @PostMapping("{cafeId}/addMenu")
     public String addMenu(@Validated @ModelAttribute("cafeMenuAddDto") CafeMenuAddDto cafeMenuAddDto,
-                          BindingResult result, @PathVariable Long cafeId, Model model) {
+                          BindingResult result, @PathVariable Long cafeId, Model model,
+                          HttpServletRequest request) {
 
         if (result.hasErrors()) {return "cafes/addMenuForm";}
 
+        HttpSession session = request.getSession(false);
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String memberName = loginMember.getName();
+
         model.addAttribute("form",
-                new CafeDetailDto(cafeService.addMenu(cafeId, cafeMenuAddDto)));
+                new CafeDetailDto(cafeService.addMenu(cafeId, cafeMenuAddDto, memberName)));
 
         return "redirect:/cafes/" + cafeId + "/detail";
     }

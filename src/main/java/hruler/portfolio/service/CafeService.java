@@ -67,9 +67,9 @@ public class CafeService {
     }
 
     @Transactional
-    public Cafe addMenu(Long cafeId, CafeMenuAddDto cafeMenuAddDto) {
+    public Cafe addMenu(Long cafeId, CafeMenuAddDto cafeMenuAddDto, String memberName) {
         Cafe findCafe = findOne(cafeId);
-        Menu menu = new Menu(cafeMenuAddDto, findCafe);
+        Menu menu = new Menu(cafeMenuAddDto, findCafe, memberName);
         findCafe.addMenu(menu);
         return findCafe;
     }
