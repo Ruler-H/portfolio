@@ -9,7 +9,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <form th:object="${cafeSearchDto}" class="form-inline">
+      <form th:action="@{/cafes}" th:object="${cafeSearchDto}" class="form-inline" method="post">
         <div class="form-group mb-2">
           <input type="text" th:field="*{searchInfo}" class="form- control" placeholder="검색 정보를 입력하세요."/>
         </div>

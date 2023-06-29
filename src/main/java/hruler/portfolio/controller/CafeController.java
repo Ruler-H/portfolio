@@ -71,6 +71,15 @@ public class CafeController {
         return "cafes/cafeListForm";
     }
 
+    @PostMapping
+    public String searchCafe(@ModelAttribute("cafeSearchDto") CafeSearchDto cafeSearchDto) {
+        log.info("searchCafe Controller");
+        log.info("cafeSearchDto - searchInfo = {}", cafeSearchDto.getSearchInfo());
+        log.info("cafeSearchDto - searchStandard = {}", cafeSearchDto.getSearchStandard());
+
+        return "cafes/cafeListForm";
+    }
+
     /**
      * Cafe edit GetMapping
      * @param cafeId
