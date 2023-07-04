@@ -2,6 +2,7 @@ package hruler.portfolio.domain.cafe;
 
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.BaseEntity;
+import hruler.portfolio.dto.CafeEditDto;
 import hruler.portfolio.dto.CafeRegisterDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,14 +30,6 @@ public class Cafe extends BaseEntity implements Persistable<Long> {
     @OneToMany(mappedBy = "cafe", cascade = CascadeType.ALL)
     private List<Menu> menus = new ArrayList<>();
 
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    private void setAddress(Address address) {
-        this.address = address;
-    }
-
     public Cafe(String name, Address address, String memberName) {
         this.name = name;
         this.address = address;
@@ -48,7 +41,7 @@ public class Cafe extends BaseEntity implements Persistable<Long> {
      * Cafe Information Update
      * @param form
      */
-    public void updateInfo(CafeRegisterDto form, String memberName) {
+    public void updateInfo(CafeEditDto form, String memberName) {
         this.name = form.getName();
         this.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
         this.setLastModifiedBy(memberName);

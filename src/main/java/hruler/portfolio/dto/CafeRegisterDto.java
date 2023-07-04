@@ -11,7 +11,6 @@ import lombok.Setter;
 public class CafeRegisterDto {
 
     private Long id;
-
     @NotBlank
     private String name;
     @NotNull
@@ -21,14 +20,21 @@ public class CafeRegisterDto {
     @NotNull
     private String zipcode;
 
-
-    public static CafeRegisterDto convert(Cafe cafe) {
-        CafeRegisterDto cafeRegisterForm = new CafeRegisterDto();
-        cafeRegisterForm.setId(cafe.getId());
-        cafeRegisterForm.setName(cafe.getName());
-        cafeRegisterForm.setCity(cafe.getAddress().getCity());
-        cafeRegisterForm.setStreet(cafe.getAddress().getStreet());
-        cafeRegisterForm.setZipcode(cafe.getAddress().getZipcode());
-        return cafeRegisterForm;
+    public CafeRegisterDto(Cafe cafe){
+        this.id = cafe.getId();
+        this.name = cafe.getName();
+        this.city = cafe.getAddress().getCity();
+        this.street = cafe.getAddress().getStreet();
+        this.zipcode = cafe.getAddress().getStreet();
     }
+
+//    public static CafeRegisterDto convert(Cafe cafe) {
+//        CafeRegisterDto cafeRegisterForm = new CafeRegisterDto();
+//        cafeRegisterForm.setId(cafe.getId());
+//        cafeRegisterForm.setName(cafe.getName());
+//        cafeRegisterForm.setCity(cafe.getAddress().getCity());
+//        cafeRegisterForm.setStreet(cafe.getAddress().getStreet());
+//        cafeRegisterForm.setZipcode(cafe.getAddress().getZipcode());
+//        return cafeRegisterForm;
+//    }
 }

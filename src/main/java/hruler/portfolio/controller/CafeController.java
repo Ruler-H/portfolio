@@ -4,10 +4,7 @@ import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.Member;
 import hruler.portfolio.domain.cafe.Cafe;
 import hruler.portfolio.domain.cafe.Menu;
-import hruler.portfolio.dto.CafeDetailDto;
-import hruler.portfolio.dto.CafeMenuAddDto;
-import hruler.portfolio.dto.CafeRegisterDto;
-import hruler.portfolio.dto.CafeSearchDto;
+import hruler.portfolio.dto.*;
 import hruler.portfolio.service.CafeService;
 import hruler.portfolio.service.MenuService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -67,15 +66,15 @@ public class CafeController {
      */
     @GetMapping
     public String list(Model model, @ModelAttribute("cafeSearchDto")CafeSearchDto cafeSearchDto) {
-        model.addAttribute("cafes", cafeService.findCafes());
+        List<Cafe> cafes = cafeService.findCafes();
+        model.addAttribute("cafes", cafes);
         return "cafes/cafeListForm";
     }
 
     @PostMapping
-    public String searchCafe(@ModelAttribute("cafeSearchDto") CafeSearchDto cafeSearchDto) {
-        log.info("searchCafe Controller");
-        log.info("cafeSearchDto - searchInfo = {}", cafeSearchDto.getSearchInfo());
-        log.info("cafeSearchDto - searchStandard = {}", cafeSearchDto.getSearchStandard());
+    public String searchCafe(@ModelAttribute("cafeSearchDto") CafeSearchDto cafeSearchDto, Model model) {
+        List<Cafe> cafes = cafeService.searchCafe(cafeSearchDto);
+        model.addAttribute("cafes", cafes);
 
         return "cafes/cafeListForm";
     }
@@ -88,7 +87,8 @@ public class CafeController {
      */
     @GetMapping("{cafeId}/edit")
     public String edit(@PathVariable("cafeId") Long cafeId, Model model) {
-        model.addAttribute("form", CafeRegisterDto.convert(cafeService.findOne(cafeId)));
+        Cafe findCafe = cafeService.findOne(cafeId);
+        model.addAttribute("form", new CafeEditDto(findCafe));
 
         return "cafes/updateCafeForm";
     }
@@ -100,8 +100,9 @@ public class CafeController {
      * @return cafes.html
      */
     @PostMapping("{cafeId}/edit")
-    public String edit(@PathVariable("cafeId") Long cafeId, @ModelAttribute("form") CafeRegisterDto form,
-                       HttpServletRequest request) {
+    public String edit(@PathVariable("cafeId") Long cafeId, @Validated @ModelAttribute("form") CafeEditDto form,
+                       BindingResult result, HttpServletRequest request) {
+        if (result.hasErrors()) {return "cafes/updateCafeForm";}
         HttpSession session = request.getSession(false);
         Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
         String memberName = loginMember.getName();

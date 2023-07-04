@@ -3,8 +3,7 @@ package hruler.portfolio.service;
 import hruler.portfolio.domain.Address;
 import hruler.portfolio.domain.cafe.Cafe;
 import hruler.portfolio.domain.cafe.Menu;
-import hruler.portfolio.dto.CafeMenuAddDto;
-import hruler.portfolio.dto.CafeRegisterDto;
+import hruler.portfolio.dto.*;
 import hruler.portfolio.repository.CafeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +60,7 @@ public class CafeService {
      * @param form
      */
     @Transactional
-    public void update(Long cafeId, CafeRegisterDto form, String memberName) {
+    public void update(Long cafeId, CafeEditDto form, String memberName) {
         Cafe findCafe = findOne(cafeId);
         findCafe.updateInfo(form, memberName);
     }
@@ -72,5 +71,14 @@ public class CafeService {
         Menu menu = new Menu(cafeMenuAddDto, findCafe, memberName);
         findCafe.addMenu(menu);
         return findCafe;
+    }
+
+    public List<Cafe> searchCafe(CafeSearchDto cafeSearchDto) {
+        if (cafeSearchDto.getSearchStandard() == SearchStandard.NAME) {
+            return cafeRepository.findListByName(cafeSearchDto.getSearchInfo());
+        } else if (cafeSearchDto.getSearchStandard() == SearchStandard.ADDRESS) {
+            return cafeRepository.findByAddress(cafeSearchDto.getSearchInfo());
+        }
+        return null;
     }
 }

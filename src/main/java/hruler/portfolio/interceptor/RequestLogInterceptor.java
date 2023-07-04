@@ -15,6 +15,7 @@ public class RequestLogInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
+        String method = request.getMethod();
 
         String logId = UUID.randomUUID().toString();
         request.setAttribute(LOG_ID, logId);
@@ -23,7 +24,7 @@ public class RequestLogInterceptor implements HandlerInterceptor {
             HandlerMethod hm = (HandlerMethod) handler;
         }
 
-        log.info("REQUEST INFO [{}][{}][{}]", logId, requestURI, handler);
+        log.info("REQUEST INFO [{}][{}][{}][{}]", logId, method, requestURI, handler);
         return true;
     }
 
